@@ -1,0 +1,77 @@
+/* Reset e base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Estrutura geral */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2vh;
+}
+
+/* Logo no topo */
+.header {
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  max-height: 100%;
+}
+
+/* Área principal (slider + info) */
+.content {
+  display: flex;
+  flex: 1;
+  gap: 2vw;
+  margin-top: 2vh;
+}
+
+/* Slider */
+.slider {
+  flex: 2;
+  background: #222;
+  border-radius: 20px;
+  display: flex;
+  overflow: hidden;
+  padding: 2vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+}
+
+/* Blocos laterais */
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2vh;
+}
+
+.bloco {
+  background: #333;
+  padding: 2vh;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1.8rem;
+}
