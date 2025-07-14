@@ -53,11 +53,14 @@ body {
   align-items: center;
 }
 
-.slide {
+.slider video {
   width: 100%;
-  text-align: center;
-  font-size: 2rem;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
 }
+
 
 /* Blocos laterais */
 .info {
