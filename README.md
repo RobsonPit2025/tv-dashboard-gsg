@@ -1,23 +1,24 @@
-# TV Dashboard - GSG Telecom
+# 📺 TV Dashboard GSG Telecom
 
-Este é um painel digital desenvolvido para TVs da empresa **GSG Telecom**, com o objetivo de exibir informações importantes de forma dinâmica e contínua.
+Este projeto é um painel visual responsivo desenvolvido para exibição em televisores, com foco em informações úteis para clientes da GSG Telecom. O layout é fixado sobre uma imagem personalizada de fundo, e inclui áreas funcionais para vídeo, horário, previsão do tempo e notícias.
+
+---
+
+## 🚀 Tecnologias utilizadas
+
+- **HTML5**
+- **CSS3**
+- **JavaScript Puro (Vanilla JS)**
+
+---
 
 ## 🎯 Funcionalidades
 
-- Slider com 13 vídeos em MP4 rodando automaticamente
-- Relógio em tempo real
-- Espaço reservado para previsão do tempo
-- Espaço para exibição de notícias
+- 🎥 **Slider automático de vídeos promocionais**  
+  Exibe vídeos sequenciais da pasta `videos/` com troca automática ao fim de cada um.
 
-## 🛠 Tecnologias Utilizadas
+- 🕒 **Relógio em tempo real**  
+  Atualiza a hora automaticamente no canto direito do painel.
 
-- HTML5
-- CSS3
-- JavaScript
-
-## 💡 Objetivo
-
-Criar um dashboard visual, leve e responsivo, pensado para rodar em Smart TVs ou dispositivos conectados, funcionando com base em navegador web.
-
-## 📂 Estrutura do Projeto
-
+- 🌤️ **Previsão do tempo** *(em desenvolvimento)*  
+  Área reservada para exibir o clima da região.
