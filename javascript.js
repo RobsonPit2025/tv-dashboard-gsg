@@ -7,3 +7,20 @@ function atualizarRelogio() {
 }
 setInterval(atualizarRelogio, 1000)
 atualizarRelogio()
+
+const video = document.getElementById("sliderVideo")
+const totalVideos = 13
+let videoIndex = 1
+
+function trocarVideo() {
+  video.src = `videos/video${videoIndex}.mp4`
+  video.load()
+  video.play()
+  videoIndex++
+  if (videoIndex > totalVideos) videoIndex = 1
+}
+
+// Troca para o primeiro vídeo e depois troca a cada vez que o vídeo termina
+trocarVideo()
+
+video.addEventListener("ended", trocarVideo)
