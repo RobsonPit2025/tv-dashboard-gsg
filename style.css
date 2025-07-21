@@ -1,21 +1,19 @@
 /* ===== VARIÁVEIS GLOBAIS ===== */
 :root {
-  --azul-primario: #0055b8;       /* Azul principal GSG */
-  --azul-secundario: #003b7d;     /* Azul mais escuro */
+  --azul-primario: #0055b8;
+  --azul-secundario: #003b7d;
   --branco: #ffffff;
   --fundo-claro: #f5f7fa;
   --borda: #e5e7eb;
   --sombra: 0 4px 12px rgba(0, 0, 0, 0.1);
   --borda-arredondada: 12px;
-  --transicao: all 0.3s ease;
 }
 
-/* ===== RESET E ESTILOS BASE ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 body {
@@ -26,27 +24,23 @@ body {
 
 /* ===== ESTRUTURA PRINCIPAL ===== */
 .dashboard {
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   max-width: 1800px;
   margin: 0 auto;
 }
 
-/* ===== CABEÇALHO ===== */
 .header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1.2rem;
-  background-color: var(--branco);
+  padding: 1rem;
+  background: var(--branco);
   box-shadow: var(--sombra);
+  text-align: center;
   z-index: 10;
 }
 
 .logo {
   height: 50px;
-  width: auto;
   transition: transform 0.3s ease;
 }
 
@@ -56,98 +50,192 @@ body {
 
 /* ===== CONTEÚDO PRINCIPAL ===== */
 .content {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 20px;
+  display: flex;
+  flex: 1;
   padding: 20px;
-  height: calc(100vh - 82px); /* 100vh - altura do header */
+  gap: 20px;
 }
 
-@media (max-width: 1024px) {
-  .content {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-}
-
-/* ===== SLIDER DE VÍDEO ===== */
+/* ===== SLIDER (CORREÇÃO DA BARRA PRETA) ===== */
 .slider {
-  position: relative;
+  flex: 2;
   border-radius: var(--borda-arredondada);
   overflow: hidden;
   box-shadow: var(--sombra);
-  background-color: #000;
-  aspect-ratio: 16/9;
+  background: #000;
+  position: relative;
+  height: 70vh;
+  max-height: 700px;
 }
 
 #sliderVideo {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: cover;
-  display: block;
-  opacity: 1;
   transition: opacity 0.5s ease;
 }
 
 /* ===== BLOCOS DE INFORMAÇÃO ===== */
 .info {
-  display: grid;
-  grid-template-rows: auto auto 1fr;
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
 .bloco {
-  background-color: var(--branco);
+  background: var(--branco);
   border-radius: var(--borda-arredondada);
   padding: 20px;
   box-shadow: var(--sombra);
-  transition: var(--transicao);
+  overflow: hidden;
 }
-
-.bloco:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* ESTILOS ESPECÍFICOS PARA CADA BLOCO */
 
 /* RELÓGIO */
 #relogio {
   background: linear-gradient(135deg, var(--azul-primario), var(--azul-secundario));
   color: var(--branco);
-  font-size: 2.5rem;
-  font-weight: 700;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 80px;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#hora {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+#data {
+  font-size: 1.1rem;
+  margin-top: 5px;
 }
 
 /* CLIMA */
 #clima {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  min-height: 120px;
+  min-height: 180px;
+}
+
+.previsao {
+  text-align: center;
+  padding: 10px;
+}
+
+.icone-clima {
+  font-size: 2rem;
+  margin: 5px 0;
+}
+
+.temperatura {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.condicao {
+  font-size: 0.9rem;
+  opacity: 0.8;
 }
 
 /* NOTÍCIAS */
 #noticias {
   overflow-y: auto;
   max-height: 300px;
+  min-height: 200px;
+}
+
+.noticia-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--borda);
+  transition: background 0.3s ease;
+}
+
+.noticia-item:hover {
+  background: #f9f9f9;
+}
+
+.noticia-titulo {
+  font-weight: 600;
+  margin-bottom: 3px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.noticia-fonte {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== ESTADOS DE CARREGAMENTO ===== */
+.carregando {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #666;
+  text-align: center;
+  height: 100%;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--azul-primario);
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 10px;
+}
+
+.erro {
+  padding: 20px;
+  text-align: center;
+  color: #d32f2f;
+  background: #ffebee;
+  border-radius: 8px;
 }
 
 /* ===== RESPONSIVIDADE ===== */
-@media (max-width: 768px) {
-  .header {
-    padding: 1rem;
+@media (max-width: 1024px) {
+  .content {
+    flex-direction: column;
   }
   
-  .logo {
-    height: 40px;
+  .slider {
+    height: 50vh;
+  }
+  
+  #clima {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  #clima {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  #hora {
+    font-size: 2rem;
+  }
+  
+  .header {
+    padding: 0.8rem;
   }
   
   .content {
@@ -158,19 +246,4 @@ body {
   .bloco {
     padding: 15px;
   }
-  
-  #relogio {
-    font-size: 2rem;
-    min-height: 70px;
-  }
-}
-
-/* ===== ANIMAÇÕES ===== */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.fade-in {
-  animation: fadeIn 0.5s ease forwards;
 }
