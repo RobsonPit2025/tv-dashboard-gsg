@@ -1,83 +1,176 @@
-/* Reset e base */
+/* ===== VARIÁVEIS GLOBAIS ===== */
+:root {
+  --azul-primario: #0055b8;       /* Azul principal GSG */
+  --azul-secundario: #003b7d;     /* Azul mais escuro */
+  --branco: #ffffff;
+  --fundo-claro: #f5f7fa;
+  --borda: #e5e7eb;
+  --sombra: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --borda-arredondada: 12px;
+  --transicao: all 0.3s ease;
+}
+
+/* ===== RESET E ESTILOS BASE ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
-/* Definir o fundo */
 body {
-  background: url('img/fundo.jpeg') no-repeat center center fixed;
-  background-size: cover;
-  font-family: Arial, sans-serif;
-  color: white;
-  height: 100vh;
-  overflow: hidden;
+  background-color: var(--fundo-claro);
+  color: #333;
+  min-height: 100vh;
 }
 
-/* Estrutura do Dashboard */
+/* ===== ESTRUTURA PRINCIPAL ===== */
 .dashboard {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+  max-width: 1800px;
+  margin: 0 auto;
 }
 
-/* Logo */
+/* ===== CABEÇALHO ===== */
 .header {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem;
+  background-color: var(--branco);
+  box-shadow: var(--sombra);
   z-index: 10;
 }
 
 .logo {
-  max-height: 60px;
-  height: auto;
+  height: 50px;
+  width: auto;
+  transition: transform 0.3s ease;
 }
 
-/* Slider (bloco da esquerda) */
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* ===== CONTEÚDO PRINCIPAL ===== */
+.content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh - 82px); /* 100vh - altura do header */
+}
+
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
+
+/* ===== SLIDER DE VÍDEO ===== */
 .slider {
-  position: absolute;
-  top: 130px;       /* ajuste conforme necessário */
-  left: 90px;
-  width: 58vw;
-  height: 60vh;
-  border-radius: 25px;
+  position: relative;
+  border-radius: var(--borda-arredondada);
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  box-shadow: var(--sombra);
+  background-color: #000;
+  aspect-ratio: 16/9;
 }
 
-.slider video {
-  width: 90%;
+#sliderVideo {
+  width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 25px;
+  display: block;
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
 
-/* Blocos laterais (direita) */
+/* ===== BLOCOS DE INFORMAÇÃO ===== */
 .info {
-  position: absolute;
-  top: 130px;
-  right: 70px;
-  width: 30vw;
-  height: 60vh;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 20px;
+}
+
+.bloco {
+  background-color: var(--branco);
+  border-radius: var(--borda-arredondada);
+  padding: 20px;
+  box-shadow: var(--sombra);
+  transition: var(--transicao);
+}
+
+.bloco:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ESTILOS ESPECÍFICOS PARA CADA BLOCO */
+
+/* RELÓGIO */
+#relogio {
+  background: linear-gradient(135deg, var(--azul-primario), var(--azul-secundario));
+  color: var(--branco);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* CLIMA */
+#clima {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 10px;
+  min-height: 120px;
 }
 
-/* Blocos individuais */
-.bloco {
-  background-color: rgba(255, 255, 255, 0); /* totalmente transparente */
-  color: black;
-  height: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  font-weight: bold;
-  border-radius: 25px;
+/* NOTÍCIAS */
+#noticias {
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+  }
+  
+  .logo {
+    height: 40px;
+  }
+  
+  .content {
+    padding: 15px;
+    gap: 15px;
+  }
+  
+  .bloco {
+    padding: 15px;
+  }
+  
+  #relogio {
+    font-size: 2rem;
+    min-height: 70px;
+  }
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
 }
