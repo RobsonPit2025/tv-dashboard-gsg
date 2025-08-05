@@ -21,102 +21,34 @@ function iniciarSlider() {
   const totalVideos = 13;
   let videoIndex = 1;
 
-  function ajustarTamanho() {
-    const containerRatio = video.parentElement.offsetWidth / video.parentElement.offsetHeight;
-    const videoRatio = video.videoWidth / video.videoHeight;
-    
-    if (videoRatio > containerRatio) {
-      video.style.width = '100%';
-      video.style.height = 'auto';
-    } else {
-      video.style.width = 'auto';
-      video.style.height = '100%';
-    }
-  }
+  function tocarProximoVideo() {
+    // Pausa, limpa e troca o vídeo
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
 
-  function trocarVideo() {
-    video.style.opacity = 0;
-    
-    const nextVideo = document.createElement('video');
-    nextVideo.src = `videos/video${videoIndex}.mp4`;
-    nextVideo.preload = "auto";
-    
-    nextVideo.onloadeddata = () => {
-      video.src = nextVideo.src;
-      video.load();
-      
-      video.onloadedmetadata = () => {
-        ajustarTamanho();
-        video.play()
-          .then(() => {
-            video.style.opacity = 1;
-          })
-          .catch(e => {
-            console.error("Erro ao reproduzir:", e);
-            setTimeout(trocarVideo, 2000);
-          });
-      };
+    const srcAtual = `videos/video${videoIndex}.mp4`;
+    video.src = srcAtual;
+
+    video.onended = () => {
+      videoIndex = (videoIndex % totalVideos) + 1;
+      tocarProximoVideo();
     };
-    
-    nextVideo.onerror = () => {
-      videoIndex = videoIndex % totalVideos + 1;
-      setTimeout(trocarVideo, 2000);
-    };
-    
-    videoIndex = videoIndex % totalVideos + 1;
+
+    video.play().catch((e) => {
+      console.error("Erro ao reproduzir vídeo:", e);
+    });
   }
 
-  window.addEventListener('resize', ajustarTamanho);
-  video.addEventListener("ended", trocarVideo);
-  video.addEventListener("error", trocarVideo);
-  trocarVideo();
-}
-
-// ===== CLIMA =====
-async function carregarClima() {
-  const climaElement = document.getElementById("clima");
-  
-  try {
-    climaElement.innerHTML = `
-      <div class="carregando">
-        <div class="spinner"></div>
-        Carregando dados do clima...
-      </div>
-    `;
-    
-    // Simulação de API
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    const climas = [
-      { dia: "Hoje", temp: "28°C", icon: "☀️", condicao: "Ensolarado" },
-      { dia: "Amanhã", temp: "26°C", icon: "⛅", condicao: "Parc. nublado" },
-      { dia: "Sex", temp: "24°C", icon: "🌧️", condicao: "Chuva leve" },
-      { dia: "Sáb", temp: "27°C", icon: "☀️", condicao: "Ensolarado" }
-    ];
-    
-    climaElement.innerHTML = climas.map(clima => `
-      <div class="previsao">
-        <div class="dia-semana">${clima.dia}</div>
-        <div class="icone-clima">${clima.icon}</div>
-        <div class="temperatura">${clima.temp}</div>
-        <div class="condicao">${clima.condicao}</div>
-      </div>
-    `).join('');
-    
-  } catch (error) {
-    console.error("Erro ao carregar clima:", error);
-    climaElement.innerHTML = `
-      <div class="erro">
-        ⚠️ Não foi possível carregar os dados do clima
-      </div>
-    `;
-  }
+  tocarProximoVideo();
 }
 
 // ===== NOTÍCIAS =====
 async function carregarNoticias() {
   const noticiasElement = document.getElementById("noticias");
-  
+  const rssUrl = "https://g1.globo.com/rss/g1/";
+  const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
   try {
     noticiasElement.innerHTML = `
       <div class="carregando">
@@ -124,30 +56,18 @@ async function carregarNoticias() {
         Buscando notícias atualizadas...
       </div>
     `;
-    
-    // Simulação de API
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    const noticias = [
-      { 
-        titulo: "Novo acordo comercial global é assinado entre 15 países", 
-        fonte: "BBC Brasil",
-        hora: "há 2 horas"
-      },
-      { 
-        titulo: "Tecnologia revolucionária promete reduzir custos de energia", 
-        fonte: "TecMundo",
-        hora: "há 4 horas"
-      }
-    ];
-    
-    noticiasElement.innerHTML = noticias.map(noticia => `
+
+    const resposta = await fetch(url);
+    const dados = await resposta.json();
+
+    const noticias = dados.items.slice(0, 5).map(noticia => `
       <div class="noticia-item">
-        <div class="noticia-titulo">${noticia.titulo}</div>
-        <div class="noticia-fonte">${noticia.fonte} • ${noticia.hora}</div>
+        <div class="noticia-titulo">${noticia.title}</div>
+        <div class="noticia-fonte">${new Date(noticia.pubDate).toLocaleString("pt-BR")}</div>
       </div>
     `).join('');
-    
+
+    noticiasElement.innerHTML = noticias;
   } catch (error) {
     console.error("Erro ao carregar notícias:", error);
     noticiasElement.innerHTML = `
@@ -158,16 +78,59 @@ async function carregarNoticias() {
   }
 }
 
+// ===== PREVISÃO PRÓXIMOS DIAS =====
+async function carregarPrevisaoDias() {
+  const previsaoContainer = document.getElementById("previsao-dias");
+  const apiKey = "1bc7fb162e6e1c041b91966f0e9e8baa";
+  const cidade = "Salvador,BR";
+  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${cidade}&appid=${apiKey}&units=metric&lang=pt_br`;
+
+  try {
+    const resposta = await fetch(url);
+    const dados = await resposta.json();
+    const dias = {};
+
+    // Agrupar por dia
+    dados.list.forEach(item => {
+      const data = new Date(item.dt_txt);
+      const dia = data.toLocaleDateString("pt-BR", { weekday: "short" });
+
+      if (!dias[dia]) {
+        dias[dia] = {
+          tempMin: item.main.temp_min,
+          tempMax: item.main.temp_max,
+          icone: item.weather[0].icon
+        };
+      } else {
+        dias[dia].tempMin = Math.min(dias[dia].tempMin, item.main.temp_min);
+        dias[dia].tempMax = Math.max(dias[dia].tempMax, item.main.temp_max);
+      }
+    });
+
+    // Pegar os próximos 4 dias (incluindo hoje)
+    const chaves = Object.keys(dias).slice(0, 4);
+
+    previsaoContainer.innerHTML = chaves.map(dia => `
+      <div class="dia-item">
+        <div class="dia">${dia}</div>
+        <div class="icone"><img src="https://openweathermap.org/img/wn/${dias[dia].icone}.png" alt=""></div>
+        <div class="temp">${Math.round(dias[dia].tempMin)}° / ${Math.round(dias[dia].tempMax)}°</div>
+      </div>
+    `).join("");
+  } catch (e) {
+    console.error("Erro ao buscar previsão estendida:", e);
+  }
+}
+
 // ===== INICIALIZAÇÃO =====
 document.addEventListener("DOMContentLoaded", () => {
   atualizarRelogio();
   setInterval(atualizarRelogio, 1000);
   
   iniciarSlider();
-  carregarClima();
   carregarNoticias();
-  
+  carregarPrevisaoDias();
   // Atualizações periódicas
-  setInterval(carregarClima, 3600000);
   setInterval(carregarNoticias, 3600000);
+  setInterval(carregarPrevisaoDias, 10800000); // Atualiza a cada 3 horas
 });

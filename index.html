@@ -17,7 +17,7 @@
     <main class="content">
       <!-- Slider -->
       <section class="slider">
-        <video id="sliderVideo" autoplay muted playsinline loop></video>
+        <video id="sliderVideo" autoplay muted playsinline></video>
       </section>
 
       <!-- Blocos laterais -->
@@ -26,7 +26,13 @@
           <div id="hora">00:00</div>
           <div id="data">Carregando...</div>
         </div>
-        <div class="bloco" id="clima">Carregando clima...</div>
+        <div class="bloco" id="clima">
+          <div class="previsao">
+            <div id="previsao-dias" class="previsao-dias" style="display: flex; justify-content: center; gap: 10px;">
+              <!-- Previsão dos próximos dias será inserida aqui via JavaScript -->
+            </div>
+          </div>
+        </div>
         <div class="bloco" id="noticias">Carregando notícias...</div>
       </aside>
     </main>
