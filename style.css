@@ -17,7 +17,7 @@
 }
 
 body {
-  background: url('img/fundo.jpeg') no-repeat center center fixed;
+  background: url('img/fundo4.png') no-repeat center center fixed;
   background-size: cover;
   color: #333;
   height: 100vh;
@@ -37,11 +37,7 @@ body {
 }
 
 .header {
-  padding: 1rem;
-  background: var(--branco);
-  box-shadow: var(--sombra);
-  text-align: center;
-  z-index: 10;
+  display: none;
 }
 
 .logo {
@@ -70,6 +66,7 @@ body {
   height: auto;
   max-height: none;
   aspect-ratio: 16 / 9;
+  margin: 70px auto 0 auto;
 }
 
 #sliderVideo {
@@ -92,7 +89,7 @@ body {
 }
 
 .bloco {
-  background: var(--branco);
+  background: rgba(255, 255, 255, 0.3);
   border-radius: var(--borda-arredondada);
   padding: 20px;
   box-shadow: var(--sombra);
@@ -101,8 +98,8 @@ body {
 
 /* RELÓGIO */
 #relogio {
-  background: linear-gradient(135deg, var(--azul-primario), var(--azul-secundario));
-  color: var(--branco);
+  background: rgba(255, 255, 255, 0.3);
+  color: black;
   text-align: center;
 }
 
@@ -157,11 +154,11 @@ body {
   margin-bottom: 3px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   font-size: 1.3vw;
   line-height: 1.3em;
   max-height: 2.6em;
-  -webkit-line-clamp: 2;
 }
 
 .noticia-fonte {
@@ -284,7 +281,6 @@ body {
 
 .previsao-dias::-webkit-scrollbar-thumb {
   background-color: #ccc;
-  border-radius: 4px;
 }
 
 .dia-item {
