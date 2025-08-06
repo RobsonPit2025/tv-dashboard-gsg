@@ -23,6 +23,7 @@ function iniciarSlider() {
 
   function tocarProximoVideo() {
     video.style.opacity = 0;
+    video.style.transition = "opacity 2s ease";
 
     setTimeout(() => {
       video.pause();
@@ -44,7 +45,7 @@ function iniciarSlider() {
           console.error("Erro ao reproduzir vídeo:", e);
         });
       };
-    }, 500); // Tempo da transição (em ms)
+    }, 2000); // Tempo da transição (em ms)
   }
 
   tocarProximoVideo();
