@@ -22,22 +22,29 @@ function iniciarSlider() {
   let videoIndex = 1;
 
   function tocarProximoVideo() {
-    // Pausa, limpa e troca o vídeo
-    video.pause();
-    video.removeAttribute("src");
-    video.load();
+    video.style.opacity = 0;
 
-    const srcAtual = `videos/video${videoIndex}.mp4`;
-    video.src = srcAtual;
+    setTimeout(() => {
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
 
-    video.onended = () => {
-      videoIndex = (videoIndex % totalVideos) + 1;
-      tocarProximoVideo();
-    };
+      const srcAtual = `videos/video${videoIndex}.mp4`;
+      video.src = srcAtual;
 
-    video.play().catch((e) => {
-      console.error("Erro ao reproduzir vídeo:", e);
-    });
+      video.onended = () => {
+        videoIndex = (videoIndex % totalVideos) + 1;
+        tocarProximoVideo();
+      };
+
+      video.oncanplay = () => {
+        video.play().then(() => {
+          video.style.opacity = 1;
+        }).catch((e) => {
+          console.error("Erro ao reproduzir vídeo:", e);
+        });
+      };
+    }, 500); // Tempo da transição (em ms)
   }
 
   tocarProximoVideo();
