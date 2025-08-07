@@ -13,16 +13,19 @@ Este projeto é um painel visual responsivo desenvolvido para exibição em tele
 ## 🎯 Funcionalidades
 
 - 🎥 **Slider automático de vídeos promocionais**  
-  Exibe vídeos sequenciais da pasta `videos/` com transição automática. Todos os vídeos são padronizados para resolução 1440x720 para manter a consistência visual.
+  Exibe vídeos sequenciais da pasta `videos/` com transição automática e efeito de opacidade suave.
 
 - 🕒 **Relógio em tempo real**  
   Mostra a hora atual e a data completa com atualização contínua, exibida no topo direito da tela.
 
 - 🌤️ **Previsão do tempo (implementada)**  
-  Mostra os próximos dias da semana com ícone e temperatura mínima/máxima, com layout responsivo e leve.
+  Mostra os próximos dias da semana com ícone e temperatura mínima/máxima, utilizando a API do OpenWeatherMap.
 
-- 📰 **Notícias dinâmicas**  
-  Mostra automaticamente as últimas manchetes em destaque com horário e título, atualizando conforme o conteúdo muda.
+- 📰 **Notícias dinâmicas com rolagem automática**  
+  Integração com a API da [NewsData.io](https://newsdata.io/) para exibir notícias da cidade de Salvador.
+  - Atualização automática a cada 30 minutos.
+  - Exibe até 5 notícias recentes com título, fonte e data (ex: *Atarde • 07/08/2025*).
+  - Rolagem automática vertical contínua para visualização dinâmica em painéis de TV.
 
 - 🖼️ **Imagem de fundo personalizada**  
   O projeto permite uso de imagens `.jpeg` como plano de fundo, criadas no Canva com dimensões otimizadas para TVs (ex: 1920x1080 ou 1440x810).  

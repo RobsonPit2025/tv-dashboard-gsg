@@ -51,11 +51,10 @@ function iniciarSlider() {
   tocarProximoVideo();
 }
 
-// ===== NOTÍCIAS =====
+// ===== NOTÍCIAS (NEWSData.io) =====
 async function carregarNoticias() {
   const noticiasElement = document.getElementById("noticias");
-  const rssUrl = "https://g1.globo.com/rss/g1/";
-  const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+  const url = "https://newsdata.io/api/1/news?apikey=pub_a6ee05e658c8484a8649bf33302d9f19&q=Salvador&language=pt&country=br";
 
   try {
     noticiasElement.innerHTML = `
@@ -68,19 +67,36 @@ async function carregarNoticias() {
     const resposta = await fetch(url);
     const dados = await resposta.json();
 
-    const noticias = dados.items.slice(0, 5).map(noticia => `
-      <div class="noticia-item">
-        <div class="noticia-titulo">${noticia.title}</div>
-        <div class="noticia-fonte">${new Date(noticia.pubDate).toLocaleString("pt-BR")}</div>
-      </div>
-    `).join('');
+    if (!dados.results || dados.results.length === 0) {
+      throw new Error("Nenhuma notícia encontrada.");
+    }
 
-    noticiasElement.innerHTML = noticias;
+    const noticias = dados.results.slice(0, 5).map(noticia => {
+      const titulo = noticia.title || "Sem título";
+      const fonte = noticia.source_id || "Fonte desconhecida";
+      const data = new Date(noticia.pubDate).toLocaleDateString("pt-BR");
+
+      return `
+        <div class="noticia-item">
+          <div class="noticia-titulo">${titulo}</div>
+          <div class="noticia-meta">${fonte} • ${data}</div>
+        </div>
+      `;
+    }).join("");
+
+    noticiasElement.innerHTML = `
+      <div class="noticias-scroll">
+        ${noticias}
+      </div>
+    `;
+
+    setTimeout(iniciarRolagemNoticias, 200); // Aguarda o DOM atualizar antes de iniciar rolagem
+
   } catch (error) {
     console.error("Erro ao carregar notícias:", error);
     noticiasElement.innerHTML = `
       <div class="erro">
-        ⚠️ Falha ao carregar notícias. Tente recarregar a página.
+        ⚠️ Falha ao carregar notícias. Tente recarregar mais tarde.
       </div>
     `;
   }
@@ -138,7 +154,33 @@ document.addEventListener("DOMContentLoaded", () => {
   iniciarSlider();
   carregarNoticias();
   carregarPrevisaoDias();
+  iniciarRolagemNoticias();
   // Atualizações periódicas
-  setInterval(carregarNoticias, 3600000);
+  setInterval(carregarNoticias, 1800000); // Atualiza a cada 30 minutos
   setInterval(carregarPrevisaoDias, 10800000); // Atualiza a cada 3 horas
 });
+
+function iniciarRolagemNoticias() {
+  const container = document.querySelector(".noticias-scroll");
+  if (!container) return;
+
+  container.style.overflowY = "hidden";
+  container.style.maxHeight = "200px";
+  container.style.position = "relative";
+
+  let scrollPos = 0;
+  const velocidade = 1; // pixels por passo
+  const intervalo = 100; // milissegundos entre passos (mais lento)
+
+  function rolar() {
+    scrollPos += velocidade;
+
+    if (scrollPos >= container.scrollHeight - container.clientHeight) {
+      scrollPos = 0;
+    }
+
+    container.scrollTop = scrollPos;
+  }
+
+  setInterval(rolar, intervalo);
+}
