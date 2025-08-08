@@ -54,7 +54,7 @@ function iniciarSlider() {
 // ===== NOTÍCIAS (NEWSData.io) =====
 async function carregarNoticias() {
   const noticiasElement = document.getElementById("noticias");
-  const url = "https://newsdata.io/api/1/news?apikey=pub_a6ee05e658c8484a8649bf33302d9f19&q=Salvador&language=pt&country=br";
+  const url = "https://newsdata.io/api/1/news?apikey=pub_1a3523be87dc418e8671b22936d5c8a5&q=Salvador&language=pt&country=br";
 
   try {
     noticiasElement.innerHTML = `
