@@ -70,7 +70,7 @@ body {
   height: auto;
   max-height: none;
   aspect-ratio: 16 / 9;
-  margin-top: 120px;
+  margin-top: 220px;
 }
 
 #sliderVideo {
@@ -356,7 +356,7 @@ body {
 
   .slider {
     aspect-ratio: 16 / 9;
-    margin-top: 120px;
+    margin-top: 220px;
   }
 
   .info {
