@@ -387,3 +387,24 @@ body {
     font-size: 0.9vw;
   }
 }
+/* ===== BOTÃO DE TELA CHEIA ===== */
+#fullscreenButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 12px 20px;
+  background-color: rgba(0, 85, 184, 0.8); /* Azul primário com transparência */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2vw;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.6;
+}
+
+#fullscreenButton:hover {
+  background-color: rgba(0, 85, 184, 1); /* Azul primário sólido ao passar o mouse */
+  opacity: 1;
+}

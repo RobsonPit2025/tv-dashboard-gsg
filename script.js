@@ -155,6 +155,48 @@ document.addEventListener("DOMContentLoaded", () => {
   carregarNoticias();
   carregarPrevisaoDias();
   iniciarRolagemNoticias();
+
+  // // Abrir em tela cheia automaticamente
+  // if (document.documentElement.requestFullscreen) {
+  //   document.documentElement.requestFullscreen();
+  // }
+
+  const fullscreenButton = document.createElement("button");
+  fullscreenButton.textContent = "⛶ Tela cheia";
+  fullscreenButton.style.position = "fixed";
+  fullscreenButton.style.bottom = "20px";
+  fullscreenButton.style.right = "20px";
+  fullscreenButton.style.padding = "10px 20px";
+  fullscreenButton.style.background = "#000";
+  fullscreenButton.style.color = "#fff";
+  fullscreenButton.style.border = "none";
+  fullscreenButton.style.borderRadius = "5px";
+  fullscreenButton.style.cursor = "pointer";
+  fullscreenButton.style.zIndex = 9999;
+  fullscreenButton.style.fontSize = "18px";
+  fullscreenButton.style.opacity = "0.6";
+
+  let emTelaCheia = false;
+
+  fullscreenButton.addEventListener("click", () => {
+    if (!emTelaCheia) {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  });
+
+  document.addEventListener("fullscreenchange", () => {
+    emTelaCheia = !!document.fullscreenElement;
+    fullscreenButton.textContent = emTelaCheia ? "⛶ Sair tela cheia" : "⛶ Tela cheia";
+  });
+
+  document.body.appendChild(fullscreenButton);
+
   // Atualizações periódicas
   setInterval(carregarNoticias, 1800000); // Atualiza a cada 30 minutos
   setInterval(carregarPrevisaoDias, 10800000); // Atualiza a cada 3 horas
