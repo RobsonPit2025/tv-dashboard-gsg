@@ -227,63 +227,6 @@ body {
   border-radius: 8px;
 }
 
-/* ===== RESPONSIVIDADE ===== */
-@media (max-width: 1024px) {
-  .content {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .info {
-    align-items: center;
-    margin-top: 3vh;
-  }
-
-  .slider {
-    height: 45vh;
-  }
-  
-  #clima {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  #clima {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  #hora {
-    font-size: 2rem;
-  }
-  
-  .header {
-    padding: 0.8rem;
-  }
-  
-  .content {
-    padding: 15px;
-    gap: 15px;
-  }
-  
-  .bloco {
-    padding: 15px;
-  }
-}
-
-@media (min-width: 1920px) {
-  .logo {
-    height: 4vw;
-  }
-
-  .bloco {
-    padding: 2vw;
-  }
-
-  #noticias {
-    max-height: 40vh;
-  }
-}
 /* PREVISÃO DOS PRÓXIMOS DIAS */
 .previsao-dias {
   display: flex;
@@ -347,24 +290,86 @@ body {
   transition: transform 0.5s ease-in-out;
 }
 
-@media (min-width: 1366px) {
-  .dashboard {
-    max-width: 100%;
-  }
+/* ===== RESPONSIVIDADE ===== */
 
+/* === TV 24" (HD - até 1365px) === */
+@media (max-width: 1365px) {
   .content {
-    padding: 3vh 6vw;
-    gap: 3vw;
-    grid-template-columns: 1.8fr 1fr;
-    height: 100vh;
+    padding: 2vh 3vw;
+    grid-template-columns: 1.2fr 1fr;
   }
 
   .slider {
-    aspect-ratio: 16 / 9;
+    width: 90%;
+    margin-top: 4vh;
   }
 
-  .info {
-    margin-top: 60px;
+  #hora {
+    font-size: 3vw;
+  }
+
+  #data {
+    font-size: 1.2vw;
+  }
+
+  .noticia-titulo {
+    font-size: 1vw;
+  }
+
+  .noticia-fonte {
+    font-size: 0.8vw;
+  }
+}
+
+/* === TV 32" (HD - 1366x768) === */
+@media (min-width: 1366px) and (max-width: 1439px) {
+  .content {
+    padding: 3vh 5vw;
+    grid-template-columns: 1.5fr 1fr;
+  }
+
+  .slider {
+    width: 92%;
+    margin-top: 30vh;
+  }
+}
+
+/* === TV 40"-43" (Full HD - 1440x900 até 1919x...) === */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .content {
+    padding: 4vh 6vw;
+    grid-template-columns: 1.6fr 1fr;
+  }
+
+  .slider {
+    width: 93%;
+    margin-top: 25vh;
+  }
+}
+
+/* === TV 50"-55" (Full HD / 4K - 1920x1080 até 2399px) === */
+@media (min-width: 1920px) and (max-width: 2399px) {
+  .content {
+    padding: 4vh 7vw;
+    grid-template-columns: 1.8fr 1fr;
+  }
+
+  .slider {
+    width: 94%;
+    margin-top: 15vh;
+  }
+}
+
+/* === TV 40" (Full HD - 1920x1080 até 2559px) === */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .content {
+    padding: 4vh 6vw;
+    grid-template-columns: 1.8fr 1fr;
+  }
+
+  .slider {
+    width: 92%;
+    margin-top: 8vh;
   }
 
   #hora {
@@ -376,43 +381,88 @@ body {
   }
 
   .noticia-titulo {
-    font-size: 1.2vw;
+    font-size: 1.3vw;
   }
 
   .noticia-fonte {
     font-size: 1vw;
   }
+}
 
-  .dia-item {
-    font-size: 0.9vw;
+/* === TV 60"-65" (4K - 2400x até 2559px) === */
+@media (min-width: 2400px) and (max-width: 2559px) {
+  .content {
+    padding: 5vh 7vw;
+    grid-template-columns: 2fr 1fr;
   }
 
-  .dia-item .temp {
-    font-size: 0.9vw;
+  .slider {
+    width: 95%;
+    margin-top: 9vh;
   }
 }
-/* ===== BOTÃO DE TELA CHEIA ===== */
-#fullscreenButton {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  padding: 12px 20px;
-  background-color: rgba(0, 85, 184, 0.8); /* Azul primário com transparência */
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.2vw;
-  cursor: pointer;
-  transition: background-color 0.3s ease, opacity 0.3s ease;
-  opacity: 0.6;
+
+/* === TV 50"+ (2K/4K - 2560px e acima) === */
+@media (min-width: 2560px) {
+  .content {
+    padding: 5vh 8vw;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .slider {
+    width: 95%;
+    margin-top: 10vh;
+  }
+
+  #hora {
+    font-size: 4.5vw;
+  }
+
+  #data {
+    font-size: 1.8vw;
+  }
+
+  .noticia-titulo {
+    font-size: 1.4vw;
+    max-height: 2.8em;
+  }
+
+  .noticia-fonte {
+    font-size: 1.1vw;
+  }
+
+  .bloco {
+    padding: 2.5vw;
+  }
 }
 
-#fullscreenButton:hover {
-  background-color: rgba(0, 85, 184, 1); /* Azul primário sólido ao passar o mouse */
-  opacity: 1;
+/* === TV 70"-75" (4K - 2560px até 2999px) === */
+@media (min-width: 2560px) and (max-width: 2999px) {
+  .content {
+    padding: 5vh 8vw;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .slider {
+    width: 96%;
+    margin-top: 10vh;
+  }
 }
-/* ===== 4K TV/Ultra-Wide (Resoluções maiores) ===== */
+
+/* === TV 85"+ (4K/8K - 3000px e acima) === */
+@media (min-width: 3000px) {
+  .content {
+    padding: 6vh 9vw;
+    grid-template-columns: 2.2fr 1fr;
+  }
+
+  .slider {
+    width: 97%;
+    margin-top: 11vh;
+  }
+}
+
+/* === Ultra-Wide/4K (2560px e acima) === */
 @media (min-width: 2560px) {
   .slider {
     width: 85%;
@@ -444,4 +494,26 @@ body {
   .bloco {
     padding: 2.5vw;
   }
+}
+
+/* ===== BOTÃO DE TELA CHEIA ===== */
+#fullscreenButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 12px 20px;
+  background-color: rgba(0, 85, 184, 0.8); /* Azul primário com transparência */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2vw;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.6;
+}
+
+#fullscreenButton:hover {
+  background-color: rgba(0, 85, 184, 1); /* Azul primário sólido ao passar o mouse */
+  opacity: 1;
 }
