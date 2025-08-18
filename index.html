@@ -8,37 +8,42 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="dashboard">
-    <header class="header">
-    </header>
+  <div id="stage-wrapper">
+    <div id="stage">
+      <div class="dashboard">
+        <header class="header">
+        </header>
 
-    <!-- Conteúdo principal -->
-    <main class="content">
-      <!-- Slider -->
-      <section class="slider">
-        <video id="sliderVideo" autoplay muted playsinline></video>
-      </section>
+        <!-- Conteúdo principal -->
+        <main class="content">
+          <!-- Slider -->
+          <section class="slider">
+            <video id="sliderVideo" autoplay muted playsinline></video>
+          </section>
 
-      <!-- Blocos laterais -->
-      <aside class="info">
-        <div class="bloco" id="relogio">
-          <div id="hora">00:00</div>
-          <div id="data">Carregando...</div>
-        </div>
-        <div class="bloco" id="clima">
-          <div class="previsao">
-            <div id="previsao-dias" class="previsao-dias" style="display: flex; justify-content: center; gap: 10px;">
-              <!-- Previsão dos próximos dias será inserida aqui via JavaScript -->
+          <!-- Blocos laterais -->
+          <aside class="info">
+            <div class="bloco" id="relogio">
+              <div id="hora">00:00</div>
+              <div id="data">Carregando...</div>
             </div>
-          </div>
-        </div>
-        <div class="bloco" id="noticias">
-          <!-- Notícias serão exibidas aqui em rotação automática -->
-        </div>
-      </aside>
-    </main>
+            <div class="bloco" id="clima">
+              <div class="previsao">
+                <div id="previsao-dias" class="previsao-dias" style="display: flex; justify-content: center; gap: 10px;">
+                  <!-- Previsão dos próximos dias será inserida aqui via JavaScript -->
+                </div>
+              </div>
+            </div>
+            <div class="bloco" id="noticias">
+              <!-- Notícias serão exibidas aqui em rotação automática -->
+            </div>
+          </aside>
+        </main>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
+  <script src="fit.js"></script>
 </body>
 </html>
