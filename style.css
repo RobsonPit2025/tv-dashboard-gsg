@@ -6,7 +6,19 @@
   --fundo-claro: #f5f7fa;
   --borda: #e5e7eb;
   --sombra: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --borda-arredondada: 12px;
+  --borda-arredondada: clamp(8px, 1vw, 16px);
+  
+  /* Sistema de escala responsivo */
+  --base-font-size: clamp(14px, 1.5vw, 24px);
+  --scale-factor: 1;
+}
+
+/* ===== RESET E BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 html, body {
@@ -15,127 +27,105 @@ html, body {
   margin: 0;
   background: #000;
   overflow: hidden;
+  font-size: var(--base-font-size);
 }
 
+/* ===== SISTEMA DE ESCALA MELHORADO ===== */
 #stage-wrapper {
   position: fixed;
   inset: 0;
   display: grid;
   place-items: center;
+  background: #000;
+  background-image: url(img/fundo-novo.png);
 }
 
 #stage {
   width: 1920px;
   height: 1080px;
   position: relative;
-  transform-origin: top left;
+  transform-origin: center center;
   background: transparent;
-  padding: 4% 4%;
+  padding: clamp(20px, 4%, 80px);
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-:root {
-  font-size: 16px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
+/* ===== CORPO PRINCIPAL ===== */
 body {
   background: url('img/fundo-novo.png') no-repeat center center fixed;
   background-size: cover;
   color: #333;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
 }
 
 /* ===== ESTRUTURA PRINCIPAL ===== */
 .dashboard {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  max-width: 100%;
-  margin: 0 auto;
   width: 100%;
   height: 100%;
+  min-height: 100%;
 }
 
 .header {
   display: none;
 }
 
-.logo {
-  height: 50px;
-  transition: transform 0.3s ease;
-}
-
-.logo:hover {
-  transform: scale(1.05);
-}
-
 /* ===== CONTEÚDO PRINCIPAL ===== */
 .content {
   display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  align-items: center;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(20px, 3vw, 60px);
+  padding: clamp(20px, 3%, 60px);
+  height: 100%;
+  align-items: start;
   align-content: center;
-  justify-content: center;
-  gap: 2vw;
-  padding: 4vh 4vw;
-  height: calc(100vh - 6vh);
 }
 
-/* ===== SLIDER (CORREÇÃO DA BARRA PRETA) ===== */
+/* ===== SLIDER MELHORADO ===== */
 .slider {
   border-radius: var(--borda-arredondada);
   overflow: hidden;
-  transition: all 1s ease-in-out;
   position: relative;
+  width: 100%;
   height: auto;
-  max-height: none;
   aspect-ratio: 16 / 9;
-  width: 95%;
-  align-self: flex-start;
-  margin: 0;
-  margin-top: 8vh;
+  margin-top: clamp(20px, 8vh, 80px);
+  transition: all 0.3s ease;
 }
 
 #sliderVideo {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
-  margin: 0 auto;
-  transition: opacity 0.5s ease;
   transition: opacity 1s ease-in-out;
   opacity: 1;
+  border-radius: var(--borda-arredondada);
 }
 
 /* ===== BLOCOS DE INFORMAÇÃO ===== */
 .info {
-  min-width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  height: 100%;
-  margin-top: 2vh;
-  align-self: end;
+  gap: clamp(15px, 2vh, 30px);
+  height: fit-content;
+  margin-top: clamp(10px, 2vh, 40px);
+  min-width: 280px;
 }
 
 .bloco {
   background: rgba(255, 255, 255, 0.3);
   border-radius: var(--borda-arredondada);
-  padding: 20px;
+  padding: clamp(15px, 2.5vw, 40px);
   box-shadow: var(--sombra);
   overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* RELÓGIO */
+/* ===== RELÓGIO ===== */
 #relogio {
   background: rgba(255, 255, 255, 0.3);
   color: black;
@@ -143,79 +133,118 @@ body {
 }
 
 #hora {
-  font-size: 4vw;
+  font-size: clamp(2rem, 4vw, 6rem);
   font-weight: bold;
+  line-height: 1.1;
 }
 
 #data {
-  font-size: 1.5vw;
-  margin-top: 5px;
+  font-size: clamp(0.8rem, 1.5vw, 2rem);
+  margin-top: clamp(5px, 1vh, 15px);
+  font-weight: 500;
 }
 
-/* CLIMA */
+/* ===== CLIMA ===== */
 #clima {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: clamp(8px, 1vh, 20px);
 }
 
 .previsao {
   text-align: center;
-  padding: 10px;
+  padding: clamp(8px, 1vh, 20px);
+  width: 100%;
 }
 
-.icone-clima {
-  font-size: 2rem;
-  margin: 5px 0;
+.previsao-dias {
+  display: flex;
+  justify-content: space-between;
+  gap: clamp(5px, 1vw, 15px);
+  align-items: flex-start;
+  width: 100%;
 }
 
+.dia-item {
+  flex: 1;
+  min-width: 60px;
+  background-color: rgba(238, 242, 245, 0.9);
+  border-radius: clamp(6px, 0.8vw, 12px);
+  padding: clamp(8px, 1.2vw, 20px);
+  text-align: center;
+  font-size: clamp(0.6rem, 0.8vw, 1.2rem);
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 80px;
+}
 
-/* NOTÍCIAS */
+.dia-item .dia {
+  font-weight: bold;
+  margin-bottom: clamp(3px, 0.5vh, 8px);
+}
+
+.dia-item .icone {
+  font-size: clamp(1rem, 1.5vw, 2rem);
+  margin: clamp(3px, 0.5vh, 8px) 0;
+}
+
+.dia-item .icone img {
+  width: clamp(20px, 2.5vw, 40px);
+  height: auto;
+}
+
+.dia-item .temp {
+  font-weight: bold;
+  font-size: clamp(0.7rem, 1vw, 1.4rem);
+}
+
+/* ===== NOTÍCIAS ===== */
 #noticias {
   overflow: hidden;
-  max-height: 300px;
-  min-height: 200px;
+  max-height: clamp(200px, 25vh, 400px);
+  min-height: clamp(150px, 20vh, 300px);
   position: relative;
 }
 
-.ultima-atualizacao {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  font-size: 0.8vw;
-  color: #000000;
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 5px 10px;
-  border-radius: 8px;
+.noticias-scroll {
+  height: 100%;
+  overflow-y: hidden;
 }
 
 .noticia-item {
-  padding: 10px 0;
+  padding: clamp(8px, 1vh, 20px) 0;
   border-bottom: 1px solid var(--borda);
   transition: background 0.3s ease;
   color: #000000;
 }
 
 .noticia-item:hover {
-  background: #e2d8d8;
+  background: rgba(226, 216, 216, 0.5);
 }
 
 .noticia-titulo {
   font-weight: 600;
   color: #000000;
-  margin-bottom: 3px;
+  margin-bottom: clamp(3px, 0.5vh, 8px);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  font-size: 1.3vw;
-  line-height: 1.3em;
-  max-height: 2.6em;
+  font-size: clamp(0.8rem, 1.3vw, 1.8rem);
+  line-height: 1.3;
 }
 
 .noticia-fonte {
-  font-size: 1vw;
+  font-size: clamp(0.6rem, 1vw, 1.4rem);
+  color: #000000;
+  font-weight: bold;
+}
+
+.noticia-meta {
+  font-size: clamp(0.6rem, 1vw, 1.4rem);
   color: #000000;
   font-weight: bold;
 }
@@ -226,323 +255,155 @@ body {
   100% { transform: rotate(360deg); }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ===== ESTADOS DE CARREGAMENTO ===== */
 .carregando {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: clamp(15px, 2vh, 40px);
   color: #666;
   text-align: center;
   height: 100%;
+  animation: fadeIn 0.5s ease;
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
+  width: clamp(30px, 4vw, 60px);
+  height: clamp(30px, 4vw, 60px);
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   border-top-color: var(--azul-primario);
   animation: spin 1s ease-in-out infinite;
-  margin-bottom: 10px;
+  margin-bottom: clamp(8px, 1vh, 20px);
 }
 
 .erro {
-  padding: 20px;
+  padding: clamp(15px, 2vh, 40px);
   text-align: center;
   color: #d32f2f;
-  background: #ffebee;
-  border-radius: 8px;
+  background: rgba(255, 235, 238, 0.9);
+  border-radius: clamp(6px, 0.8vw, 12px);
+  font-size: clamp(0.8rem, 1.2vw, 1.6rem);
 }
 
-/* PREVISÃO DOS PRÓXIMOS DIAS */
-.previsao-dias {
-  display: flex;
-  justify-content: space-around;
-  gap: 10px;
-  align-items: flex-start;
-  flex-direction: row;
-  width: 100%;
-}
+/* ===== RESPONSIVIDADE SIMPLIFICADA ===== */
 
-.previsao-atual {
-  flex: 1;
-  background-color: #eef2f5;
-  border-radius: 8px;
-  padding: 10px;
-  text-align: center;
-  font-size: 0.8vw;
-  color: #333;
-  font-weight: bold;
-  display: none;
-}
-
-.previsao-dias::-webkit-scrollbar {
-  height: 8px;
-}
-
-.previsao-dias::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-}
-
-.dia-item {
-  flex: 1;
-  min-width: 80px;
-  background-color: #eef2f5;
-  border-radius: 8px;
-  padding: 10px;
-  text-align: center;
-  font-size: 0.8vw;
-  color: #333;
-  height: 100%; /* Garante altura uniforme */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.dia-item .dia {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.dia-item .icone {
-  font-size: 1.2rem;
-  margin: 5px 0;
-}
-
-.dia-item .temp {
-  font-weight: bold;
-  font-size: 1vw;
-}
-#noticias .noticia-item {
-  transition: transform 0.5s ease-in-out;
-}
-
-/* ===== RESPONSIVIDADE ===== */
-
-/* === TV 24" (HD - até 1365px) === */
-@media (max-width: 1365px) {
+/* Telas muito pequenas (TVs antigas ou monitores pequenos) */
+@media (max-width: 1366px) {
   .content {
-    padding: 2vh 3vw;
     grid-template-columns: 1.2fr 1fr;
+    gap: clamp(15px, 2vw, 40px);
   }
-
+  
   .slider {
-    width: 90%;
-    margin-top: 4vh;
-  }
-
-  #hora {
-    font-size: 3vw;
-  }
-
-  #data {
-    font-size: 1.2vw;
-  }
-
-  .noticia-titulo {
-    font-size: 1vw;
-  }
-
-  .noticia-fonte {
-    font-size: 0.8vw;
+    margin-top: clamp(15px, 5vh, 50px);
   }
 }
 
-/* === TV 32" (HD - 1366x768) === */
-@media (min-width: 1366px) and (max-width: 1439px) {
+/* Telas médias (Full HD padrão) */
+@media (min-width: 1367px) and (max-width: 2559px) {
   .content {
-    padding: 3vh 5vw;
-    grid-template-columns: 1.5fr 1fr;
-  }
-
-  .slider {
-    width: 92%;
-    margin-top: 30vh;
+    grid-template-columns: 1.4fr 1fr;
   }
 }
 
-/* === TV 40"-43" (Full HD - 1440x900 até 1919x...) === */
-@media (min-width: 1440px) and (max-width: 1919px) {
+/* Telas grandes (4K e acima) */
+@media (min-width: 2560px) {
+  :root {
+    --base-font-size: clamp(18px, 2vw, 32px);
+  }
+  
   .content {
-    padding: 4vh 6vw;
     grid-template-columns: 1.6fr 1fr;
+    gap: clamp(30px, 4vw, 80px);
   }
-
-  .slider {
-    width: 93%;
-    margin-top: 25vh;
-  }
-}
-
-/* === TV 50"-55" (Full HD / 4K - 1920x1080 até 2399px) === */
-@media (min-width: 1920px) and (max-width: 2399px) {
-  .content {
-    padding: 4vh 7vw;
-    grid-template-columns: 1.8fr 1fr;
-  }
-
-  .slider {
-    width: 94%;
-    margin-top: 15vh;
-  }
-}
-
-/* === TV 40" (Full HD - 1920x1080 até 2559px) === */
-@media (min-width: 1920px) and (max-width: 2559px) {
-  .content {
-    padding: 4vh 6vw;
-    grid-template-columns: 1.8fr 1fr;
-  }
-
-  .slider {
-    width: 92%;
-    margin-top: 8vh;
-  }
-
-  #hora {
-    font-size: 4vw;
-  }
-
-  #data {
-    font-size: 1.5vw;
-  }
-
-  .noticia-titulo {
-    font-size: 1.3vw;
-  }
-
-  .noticia-fonte {
-    font-size: 1vw;
-  }
-}
-
-/* === TV 60"-65" (4K - 2400x até 2559px) === */
-@media (min-width: 2400px) and (max-width: 2559px) {
-  .content {
-    padding: 5vh 7vw;
-    grid-template-columns: 2fr 1fr;
-  }
-
-  .slider {
-    width: 95%;
-    margin-top: 9vh;
-  }
-}
-
-/* === TV 50"+ (2K/4K - 2560px e acima) === */
-@media (min-width: 2560px) {
-  .content {
-    padding: 5vh 8vw;
-    grid-template-columns: 2fr 1fr;
-  }
-
-  .slider {
-    width: 95%;
-    margin-top: 10vh;
-  }
-
-  #hora {
-    font-size: 4.5vw;
-  }
-
-  #data {
-    font-size: 1.8vw;
-  }
-
-  .noticia-titulo {
-    font-size: 1.4vw;
-    max-height: 2.8em;
-  }
-
-  .noticia-fonte {
-    font-size: 1.1vw;
-  }
-
+  
   .bloco {
-    padding: 2.5vw;
+    padding: clamp(20px, 3vw, 60px);
   }
 }
 
-/* === TV 70"-75" (4K - 2560px até 2999px) === */
-@media (min-width: 2560px) and (max-width: 2999px) {
+/* Telas ultra-wide */
+@media (min-aspect-ratio: 21/9) {
   .content {
-    padding: 5vh 8vw;
-    grid-template-columns: 2fr 1fr;
-  }
-
-  .slider {
-    width: 96%;
-    margin-top: 10vh;
+    grid-template-columns: 1.8fr 1fr;
+    max-width: 90%;
+    margin: 0 auto;
   }
 }
 
-/* === TV 85"+ (4K/8K - 3000px e acima) === */
-@media (min-width: 3000px) {
+/* Telas muito altas (proporção mais quadrada) */
+@media (max-aspect-ratio: 4/3) {
   .content {
-    padding: 6vh 9vw;
-    grid-template-columns: 2.2fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: clamp(20px, 3vh, 60px);
   }
-
+  
   .slider {
-    width: 97%;
-    margin-top: 11vh;
+    margin-top: 0;
   }
-}
-
-/* === Ultra-Wide/4K (2560px e acima) === */
-@media (min-width: 2560px) {
-  .slider {
-    width: 85%;
-    margin-top: 10vh;
-  }
-
+  
   .info {
-    margin-top: 5vh;
-    gap: 2.5vh;
+    margin-top: 0;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: grid;
   }
+}
 
-  #hora {
-    font-size: 3vw;
+/* ===== MELHORIAS DE PERFORMANCE ===== */
+.bloco {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+#sliderVideo {
+  will-change: opacity;
+}
+
+.noticia-item {
+  will-change: transform;
+}
+
+/* ===== ACESSIBILIDADE ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
+}
 
-  #data {
-    font-size: 1.8vw;
-  }
-
-  .noticia-titulo {
-    font-size: 1.4vw;
-    max-height: 2.8em;
-  }
-
-  .noticia-fonte {
-    font-size: 1.1vw;
-  }
-
+/* ===== MODO ESCURO AUTOMÁTICO ===== */
+@media (prefers-color-scheme: dark) {
   .bloco {
-    padding: 2.5vw;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .noticia-item,
+  .noticia-titulo,
+  .noticia-fonte,
+  .noticia-meta {
+    color: white;
+  }
+  
+  #relogio {
+    color: white;
+  }
+  
+  .dia-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
   }
 }
 
-/* ===== BOTÃO DE TELA CHEIA ===== */
-#fullscreenButton {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  padding: 12px 20px;
-  background-color: rgba(0, 85, 184, 0.8); /* Azul primário com transparência */
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.2vw;
-  cursor: pointer;
-  transition: background-color 0.3s ease, opacity 0.3s ease;
-  opacity: 0.6;
-}
 
-#fullscreenButton:hover {
-  background-color: rgba(0, 85, 184, 1); /* Azul primário sólido ao passar o mouse */
-  opacity: 1;
-}
+
